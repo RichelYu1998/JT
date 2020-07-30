@@ -7,14 +7,14 @@
 
 	<!--继承父级 -->
 	<parent>
-		<groupId>com.jt</groupId>
+		<groupId>cn.tedu</groupId>
 		<artifactId>jt</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.jt</groupId>
+			<groupId>cn.tedu</groupId>
 			<artifactId>jt-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

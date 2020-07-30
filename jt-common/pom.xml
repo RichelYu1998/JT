@@ -4,7 +4,7 @@
   
   <!--利用parent标签 继承父级项目,之后引入父级中所有的依赖包.  -->
   <parent>
-    <groupId>com.jt</groupId>
+    <groupId>cn.tedu</groupId>
     <artifactId>jt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
