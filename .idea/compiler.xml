@@ -12,9 +12,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="jt" target="1.8" />
-      <module name="jt-common" target="1.8" />
-      <module name="jt-manager" target="1.8" />
+      <module name="jt" target="1.5" />
+      <module name="jt-common" target="1.5" />
+      <module name="jt-manager" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
