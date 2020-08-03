@@ -32,9 +32,11 @@ public class ItemCatController {
      * 返回值:    List<EasyUITree>
      */
     @RequestMapping("/list")
-    public List<EasyUITree> findItemCatList(){
-
-        Long parentId = 0L;  //根据parentId=0 查询一级商品分类信息
-        return itemCatService.findItemCatListByParentId(parentId);
+    public List<EasyUITree> findItemCatList(Long id){
+        if(id==null){
+            id=0L;
+        }
+       /* Long parentId = 0L;  //根据parentId=0 查询一级商品分类信息*/
+        return itemCatService.findItemCatListByParentId(id);
     }
 }
