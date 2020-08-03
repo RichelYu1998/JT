@@ -29,15 +29,23 @@ public class ItemCatServiceImpl implements ItemCatService {
      * 	3.但是返回值要求 返回List<EasyUITree>
      */
     @Override
-    public List<EasyUITree> findItemCatListByParentId(Long parentId) {
+    public List<EasyUITree> findItemCatListByParentId(Long parentId){
         QueryWrapper<ItemCat> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("parent_id",parentId);
         List<ItemCat> itemCatList = itemCatMapper.selectList(queryWrapper);
-        ArrayList<EasyUITree> treeList = new ArrayList<>();
+        List<EasyUITree> treeList = new ArrayList<>();  //先准备一个空集合.
         //需要将数据一个一个的格式转化.
-        for (ItemCat itemcat:itemCatList) {
-            Long id = itemcat.getId();///获取ID
+        for(ItemCat itemcat :itemCatList){
+            Long id = itemcat.getId();	//获取ID
+            String text = itemcat.getName();	//获取文本
+            //如果是父级,则默认应该处于关闭状态 closed, 如果不是父级 则应该处于打开状态. open
+            String state = itemcat.getIsParent()?"closed":"open";
+            //利用构造方法 为VO对象赋值  至此已经实现了数据的转化
+            EasyUITree tree = new EasyUITree(id,text,state);
+            treeList.add(tree);
         }
-        return null;
+
+        //用户需要返回List<EasyUITree>
+        return treeList;
     }
 }
