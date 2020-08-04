@@ -4,6 +4,7 @@ import cn.tedu.pojo.Item;
 import cn.tedu.service.ItemService;
 import cn.tedu.vo.EasyUITable;
 import cn.tedu.vo.SysResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -82,6 +83,11 @@ public class ItemController {
     @RequestMapping("delete")
     public SysResult deleteItems(Long[] ids) {
         itemService.deleteItems(ids);
+        return SysResult.success();
+    }
+    @RequestMapping("/updateStatus/{status}")
+    public SysResult updateItemStatus(Long[] ids, @PathVariable Integer status){
+        itemService.updateItemStatus(ids,status);
         return SysResult.success();
     }
 }

@@ -4,6 +4,7 @@ import cn.tedu.mapper.ItemMapper;
 import cn.tedu.pojo.Item;
 import cn.tedu.vo.EasyUITable;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import net.sf.jsqlparser.expression.operators.relational.ItemsList;
@@ -88,5 +89,25 @@ public class ItemServiceImpl implements ItemService {
          * 手写sql
          * */
         itemMapper.deleteItems(ids);
+    }
+
+    /**
+     * MP的更新操作
+     * 1.entity  要修改的记录
+     * 2.updateWrapper   修改条件构造器
+     * Sql: update tb_item set status=#{status},updated = #{updated}
+     * where id in (id1,id2,id3.....);
+     * 单表操作 性能损耗可以忽略.
+     */
+    @Override
+    public void updateItemStatus(Long[] ids, Integer status) {
+        //1.定义修改数据
+        Item item = new Item();
+        item.setStatus(status).setUpdated(new Date());
+        //2.定义修改的条件
+        List<Long> idList  = Arrays.asList(ids);
+        UpdateWrapper<Item> updateWrapper  = new UpdateWrapper<>();
+        updateWrapper.in("id",idList);
+        itemMapper.update(item,updateWrapper);
     }
 }
