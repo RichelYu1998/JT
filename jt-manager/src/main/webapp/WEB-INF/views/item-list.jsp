@@ -98,7 +98,17 @@
         					 $("#itemeEditForm .params td").eq(1).html(html);
         				}
         			});
-        			
+        			/*
+        			* 实现商品分类数据的ajax回显
+        			* 1.获取cid
+        			* 2.获取商品分类名称
+        			* 3.指定位置显示分类名称
+        			* */
+        			var cid=data.cid;
+        			$.get("/item/cat/queryItemName",{"itemCatId":cid},function (name) {
+        			    /*alert(name);*/
+                        $("input[name='cid']").siblings("span").text(name);
+                    });
         			KindEditorUtil.init({
         				"pics" : data.image,
         				"cid" : data.cid,
