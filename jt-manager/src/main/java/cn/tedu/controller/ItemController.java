@@ -39,7 +39,7 @@ public class ItemController {
 	* 		A:参数提交的名称与mvc中接收参数的名称一致
 	* */
 	@RequestMapping("/save")
-	public SysResult saveItem(Item item){
+	/*public SysResult saveItem(Item item){
 		//1.利用对象的get方法,获取对象的属性的信息
 		//item.getId()---->get去除------获取id的属性(大小写忽略);
 		//之后将获取到的值利用对象的set方法为属性赋值.
@@ -52,5 +52,8 @@ public class ItemController {
 			e.printStackTrace();
 			return SysResult.fail();
 		}
+	}*/
+	public SysResult saveItem(Item item){
+		return SysResult.success();
 	}
 }
