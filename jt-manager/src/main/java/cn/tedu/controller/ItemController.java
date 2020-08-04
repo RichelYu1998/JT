@@ -13,7 +13,7 @@ import java.util.List;
 @RestController //JSON字符串
 @RequestMapping("/item")
 public class ItemController {
-	
+
 	@Resource
 	private ItemService itemService;
 	/*
@@ -55,6 +55,17 @@ public class ItemController {
 	@RequestMapping("/save")
 	public SysResult saveItem(Item item){
 		itemService.saveItem(item);
+		return SysResult.success();
+	}
+	/*
+	* 完成商品的信息修改
+	* url:"/item/update"
+	* 参数:整个页面表单
+	* 返回值：SysResult
+	* */
+	@RequestMapping("/update")
+	public SysResult updateItem(Item item){
+		itemService.updateItem(item);
 		return SysResult.success();
 	}
 }
