@@ -60,14 +60,14 @@ public class ItemServiceImpl implements ItemService {
     /**
      * 实现商品信息的入库操作
      * 入库之前需要提前将数据补全.  刚新增的商品应该处于上架状态1
-     * @param item
-     * 注意事项:完成数据库更新操作时,需要注意数据库事务问题
+     *
+     * @param item 注意事项:完成数据库更新操作时,需要注意数据库事务问题
      */
     @Override
     @Transactional
     public void saveItem(Item item) {
-    	item.setStatus(1).setCreated(new Date()).setUpdated(item.getCreated());
-    	itemMapper.insert(item);
+        item.setStatus(1).setCreated(new Date()).setUpdated(item.getCreated());
+        itemMapper.insert(item);
     }
 
     @Override
@@ -79,7 +79,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItems(Long[] ids) {
-        List<Long> idList  = Arrays.asList(ids);
-        itemMapper.deleteBatchIds(idList);
+        /*
+         * 方式1：数值转集合
+         * */
+        /*List<Long> idList = Arrays.asList(ids);
+        itemMapper.deleteBatchIds(idList);*/
+        /*
+         * 手写sql
+         * */
+        itemMapper.deleteItems(ids);
     }
 }
