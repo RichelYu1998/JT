@@ -4,14 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.mapper.ItemMapper">
 	<!--留着以后用  -->
-	<!-- 完成商品刪除
-	 sql:delete from tb_item where id in (id1,id2,id3...)
+	<!--完成商品的删除
+		 void deleteItems(Long[] ids); 接口方法
+		sql: delete from tb_item where id in (id1,id2,id3...)
 
-	 collection
-	 	分类1：list集合 collection="list"
-	 	分类2：Array集合 collection="array"
-	 	分类3：Map集合 collection="Map"
-	 -->
+		collection:
+			分类1:  List集合   collection="list"
+			分类2:  Array数组  collection="array"
+			分类3:  Map集合    collection="map中的key"  规范
+	-->
 	<delete id="deleteItems">
 		delete from tb_item where id in (
 		<!-- 循环遍历数组，之后获取其中的数据，完成删除 -->
