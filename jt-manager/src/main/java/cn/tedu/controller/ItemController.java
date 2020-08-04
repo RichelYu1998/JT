@@ -14,30 +14,32 @@ import java.util.List;
 @RequestMapping("/item")
 public class ItemController {
 
-	@Resource
-	private ItemService itemService;
-	/*
-	* 业务：根据分页要求展现商品列表，要求最热门的商品优先展示
-	* url:"/item/query"
-	* 参数：page=1&rows=20 page 当前页 rows 记录数
-	* 返回值： EasyUITable
-	* */
-	@RequestMapping("/query")
-	public EasyUITable findItemByPage(Integer page, Integer rows) {
-		//1.调用业务层,获取商品分页信息
-		return itemService.findItemByPage(page, rows);
-	}
-	/*
-	* 1.url:localhost:8091/item/save
-	* 2.参数：整个form表单
-	* 返回值：SysResult对象
-	*
-	* 复习:页面中的参数是如何通过SpringMVC为属性赋值
-	* 分析:1)页面提交三种方式:1.form表单提交 2.ajax页面提交 3.标签 参数提交 页面参数提交一般遵守协议规范 key-value
-	* 分析:2)SpringMVC的底层实现Servlet 包含了2个请求对象 request/response
-	* 		Q:servlet如何获取数据？
-	* 		A:参数提交的名称与mvc中接收参数的名称一致
-	* */
+    @Resource
+    private ItemService itemService;
+
+    /*
+     * 业务：根据分页要求展现商品列表，要求最热门的商品优先展示
+     * url:"/item/query"
+     * 参数：page=1&rows=20 page 当前页 rows 记录数
+     * 返回值： EasyUITable
+     * */
+    @RequestMapping("/query")
+    public EasyUITable findItemByPage(Integer page, Integer rows) {
+        //1.调用业务层,获取商品分页信息
+        return itemService.findItemByPage(page, rows);
+    }
+
+    /*
+     * 1.url:localhost:8091/item/save
+     * 2.参数：整个form表单
+     * 返回值：SysResult对象
+     *
+     * 复习:页面中的参数是如何通过SpringMVC为属性赋值
+     * 分析:1)页面提交三种方式:1.form表单提交 2.ajax页面提交 3.标签 参数提交 页面参数提交一般遵守协议规范 key-value
+     * 分析:2)SpringMVC的底层实现Servlet 包含了2个请求对象 request/response
+     * 		Q:servlet如何获取数据？
+     * 		A:参数提交的名称与mvc中接收参数的名称一致
+     * */
 	/*@RequestMapping("/save")
 	public SysResult saveItem(Item item){
 		//1.利用对象的get方法,获取对象的属性的信息
@@ -52,20 +54,34 @@ public class ItemController {
 			return  SysResult.fail();
 		}
 	}*/
-	@RequestMapping("/save")
-	public SysResult saveItem(Item item){
-		itemService.saveItem(item);
-		return SysResult.success();
-	}
-	/*
-	* 完成商品的信息修改
-	* url:"/item/update"
-	* 参数:整个页面表单
-	* 返回值：SysResult
-	* */
-	@RequestMapping("/update")
-	public SysResult updateItem(Item item){
-		itemService.updateItem(item);
-		return SysResult.success();
-	}
+    @RequestMapping("/save")
+    public SysResult saveItem(Item item) {
+        itemService.saveItem(item);
+        return SysResult.success();
+    }
+
+    /*
+     * 完成商品的信息修改
+     * url:"/item/update"
+     * 参数:整个页面表单
+     * 返回值：SysResult
+     * */
+    @RequestMapping("/update")
+    public SysResult updateItem(Item item) {
+        itemService.updateItem(item);
+        return SysResult.success();
+    }
+
+    /*
+     *
+     * 商品删除
+     * url:/item/delete
+     * 参数: ids=id,id,id,id
+     * 返回值结果: SysResult对象
+     * */
+    @RequestMapping("delete")
+    public SysResult deleteItems(Long[] ids) {
+        itemService.deleteItems(ids);
+        return SysResult.success();
+    }
 }

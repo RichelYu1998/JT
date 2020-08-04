@@ -10,4 +10,6 @@ public interface ItemService {
 
     void saveItem(Item item);
     void updateItem(Item item);
+
+    void deleteItems(Long[] ids);
 }

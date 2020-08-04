@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -73,5 +75,11 @@ public class ItemServiceImpl implements ItemService {
     public void updateItem(Item item) {
         item.setUpdated(new Date());
         itemMapper.updateById(item);
+    }
+
+    @Override
+    public void deleteItems(Long[] ids) {
+        List<Long> idList  = Arrays.asList(ids);
+        itemMapper.deleteBatchIds(idList);
     }
 }
