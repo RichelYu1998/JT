@@ -4,7 +4,6 @@ import cn.tedu.vo.ImageVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.beans.SimpleBeanInfo;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
