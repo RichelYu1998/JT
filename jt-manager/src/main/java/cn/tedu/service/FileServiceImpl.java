@@ -4,6 +4,8 @@ import cn.tedu.vo.ImageVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,6 +34,17 @@ public class FileServiceImpl implements FileService{
         //1.2校验图片类型是否有效
         if(!typeSet.contains(fileType)) {
             //表示类型不属于图片信息  则终止程序
+            return ImageVO.fail();
+        }
+        try{
+            BufferedImage bufferedImage = ImageIO.read(uploadFile.getInputStream());
+            int width = bufferedImage.getWidth();
+            int height = bufferedImage.getHeight();
+            if(width==0||height==0){
+                return ImageVO.fail();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
             return ImageVO.fail();
         }
         //2.准备文件上传的目录结构.   文件上传根目录+动态变化的目录
