@@ -100,7 +100,14 @@ public class ItemServiceImpl implements ItemService {
         /*
          * 手写sql
          * */
-        itemMapper.deleteItems(ids);
+        /*itemMapper.deleteItems(ids);*/
+        //1.删除商品信息
+        //将数组转化为集合类型
+        List<Long> idList = Arrays.asList(ids);
+        itemMapper.deleteBatchIds(idList);
+
+        //2.删除商品详情信息
+        itemDescMapper.deleteBatchIds(idList);
     }
 
     /**
