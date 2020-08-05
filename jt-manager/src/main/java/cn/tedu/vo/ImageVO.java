@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.redis.core.PartialUpdate;
 
 import java.io.Serializable;
 @Data
@@ -15,5 +16,14 @@ public class ImageVO implements Serializable {
     private String url;     //url地址
     private Integer width;  //宽度
     private Integer height; //高度
-
+    //自定义API
+    public static ImageVO fail(){
+        return new ImageVO(1,null,null,null);
+    }
+    public static ImageVO success(String url){
+        return new ImageVO(0,url,null,null);
+    }
+    public static ImageVO success(String url,Integer width,Integer height){
+        return new ImageVO(0,url,width,height);
+    }
 }
