@@ -1,6 +1,7 @@
 package cn.tedu.controller;
 
 import cn.tedu.pojo.Item;
+import cn.tedu.pojo.ItemDesc;
 import cn.tedu.service.ItemService;
 import cn.tedu.vo.EasyUITable;
 import cn.tedu.vo.SysResult;
@@ -56,8 +57,8 @@ public class ItemController {
 		}
 	}*/
     @RequestMapping("/save")
-    public SysResult saveItem(Item item) {
-        itemService.saveItem(item);
+    public SysResult saveItem(Item item, ItemDesc itemDesc) {
+        itemService.saveItem(item,itemDesc);
         return SysResult.success();
     }
 

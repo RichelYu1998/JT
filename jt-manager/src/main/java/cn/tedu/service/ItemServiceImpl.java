@@ -1,7 +1,9 @@
 package cn.tedu.service;
 
+import cn.tedu.mapper.ItemDescMapper;
 import cn.tedu.mapper.ItemMapper;
 import cn.tedu.pojo.Item;
+import cn.tedu.pojo.ItemDesc;
 import cn.tedu.vo.EasyUITable;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -22,6 +24,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Resource
     private ItemMapper itemMapper;
+    @Resource
+    private ItemDescMapper itemDescMapper;
 
     /**
      * 执行步骤:1.手动编辑sql    2.利用MP机制 动态生成
@@ -66,9 +70,12 @@ public class ItemServiceImpl implements ItemService {
      */
     @Override
     @Transactional
-    public void saveItem(Item item) {
+    public void saveItem(Item item, ItemDesc itemDesc) {
         item.setStatus(1).setCreated(new Date()).setUpdated(item.getCreated());
         itemMapper.insert(item);
+        itemMapper.insert(item);
+        itemDesc.setItemId(item.getId()).setCreated(item.getCreated()).setUpdated(item.getCreated());
+        itemDescMapper.insert(itemDesc);
     }
 
     @Override
