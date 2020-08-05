@@ -1,14 +1,19 @@
 package cn.tedu.controller;
 
+import cn.tedu.service.FileService;
+import cn.tedu.vo.ImageVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 
 @RestController
 public class FileController {
+    @Resource
+    private FileService fileService;
     /**
      * url地址: http://localhost:8091/file
      * 参数:    File=fileImage
@@ -41,5 +46,15 @@ public class FileController {
         //5.利用api实现文件输出.
         fileImage.transferTo(file);
         return "恭喜你,文件上传成功!!!";
+    }
+    /**
+     * 业务分析:实现文件上传.
+     * 1.url地址: http://localhost:8091/pic/upload
+     * 2.参数:   uploadFile  文件上传对象
+     * 3.返回值:  ImageVO对象
+     */
+    @RequestMapping("/pic/upload")
+    public ImageVO uploadFile(MultipartFile uploadFile){
+        return fileService.uploadFile(uploadFile);
     }
 }
