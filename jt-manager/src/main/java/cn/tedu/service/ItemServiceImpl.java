@@ -79,9 +79,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public void updateItem(Item item) {
+    public void updateItem(Item item,ItemDesc itemDesc) {
+        //1.更新商品信息
         item.setUpdated(new Date());
         itemMapper.updateById(item);
+
+        //2.更新商品详情信息
+        itemDesc.setItemId(item.getId())
+                .setUpdated(item.getUpdated());
+        itemDescMapper.updateById(itemDesc);
     }
 
     @Override
