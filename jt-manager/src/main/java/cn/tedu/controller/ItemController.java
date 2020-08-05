@@ -91,4 +91,15 @@ public class ItemController {
         itemService.updateItemStatus(ids,status);
         return SysResult.success();
     }
+    /**
+     * 业务需求:  根据itemId查询商品详情信息
+     * url地址:  http://localhost:8091/item/query/item/desc/1474391972
+     * 参数:		使用restFul方式使用传输传递
+     * 返回值:    SysResult对象,并且需要携带itemDesc数据信息.
+     */
+    @RequestMapping("/query/item/desc/{itemId}")
+    public SysResult findItemDescById(@PathVariable  Long itemId){
+        ItemDesc itemDesc = itemService.findItemDescById(itemId);
+        return SysResult.success(itemDesc);
+    }
 }

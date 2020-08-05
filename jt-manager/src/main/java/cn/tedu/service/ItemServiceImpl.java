@@ -117,4 +117,9 @@ public class ItemServiceImpl implements ItemService {
         itemMapper.update(item,updateWrapper);*/
         itemMapper.updateStatus(ids,status);
     }
+
+    @Override
+    public ItemDesc findItemDescById(Long itemId) {
+        return itemDescMapper.selectById(itemId);
+    }
 }
