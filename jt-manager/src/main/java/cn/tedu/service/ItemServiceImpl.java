@@ -73,7 +73,6 @@ public class ItemServiceImpl implements ItemService {
     public void saveItem(Item item, ItemDesc itemDesc) {
         item.setStatus(1).setCreated(new Date()).setUpdated(item.getCreated());
         itemMapper.insert(item);
-        itemMapper.insert(item);
         itemDesc.setItemId(item.getId()).setCreated(item.getCreated()).setUpdated(item.getCreated());
         itemDescMapper.insert(itemDesc);
     }
