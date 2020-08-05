@@ -101,13 +101,14 @@ public class ItemServiceImpl implements ItemService {
      */
     @Override
     public void updateItemStatus(Long[] ids, Integer status) {
-        //1.定义修改数据
+       /* //1.定义修改数据
         Item item = new Item();
         item.setStatus(status).setUpdated(new Date());
         //2.定义修改的条件
         List<Long> idList  = Arrays.asList(ids);
         UpdateWrapper<Item> updateWrapper  = new UpdateWrapper<>();
         updateWrapper.in("id",idList);
-        itemMapper.update(item,updateWrapper);
+        itemMapper.update(item,updateWrapper);*/
+        itemMapper.updateStatus(ids,status);
     }
 }

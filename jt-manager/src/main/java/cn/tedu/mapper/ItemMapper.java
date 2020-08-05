@@ -23,4 +23,6 @@ public interface ItemMapper extends BaseMapper<Item> {
      * @param ids
      */
     void deleteItems(Long[] ids);
+
+    void updateStatus(Long[] ids, Integer status);
 }
