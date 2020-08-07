@@ -55,7 +55,7 @@ public class FileServiceImpl implements FileService{
         }
         //2.准备文件上传的目录结构.   文件上传根目录+动态变化的目录
         String dateDir = new SimpleDateFormat("/yyyy/MM/dd/").format(new Date());
-        //D:/JT-SOFT/images/2020/7/10/
+        //H:/images/2020/8/07/
         String dirPath = localDir + dateDir;
         File dirFile = new File(dirPath);
         if(!dirFile.exists()) {
