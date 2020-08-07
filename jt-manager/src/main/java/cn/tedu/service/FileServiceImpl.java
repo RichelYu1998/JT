@@ -1,6 +1,8 @@
 package cn.tedu.service;
 
 import cn.tedu.vo.ImageVO;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,9 +17,12 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
+@PropertySource("classpath:/properties/image.properties")
 public class FileServiceImpl implements FileService{
-    private String localDir="H:/images";
-    private String urlPath="http://image.jt.com";
+    @Value("${image.localDir}")
+    private String localDir;	// = "H:/images";	 //1.优化点一
+    @Value("${image.imageUrl}")
+    private String imageUrl;	//定义url虚拟网址.
     @Override
     public ImageVO uploadFile(MultipartFile uploadFile) {
         //1.校验上传的信息 是否为图片
@@ -63,7 +68,7 @@ public class FileServiceImpl implements FileService{
         File imageFile = new File(dirPath+realFileName);
         try {
             uploadFile.transferTo(imageFile);
-            String url = urlPath+dateDir+realFileName;
+            String url = imageUrl + dateDir + realFileName;
             return ImageVO.success(url);
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
