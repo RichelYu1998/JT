@@ -17,6 +17,7 @@ import java.util.UUID;
 @Service
 public class FileServiceImpl implements FileService{
     private String localDir="H:/images";
+    private String urlPath="http://image.jt.com";
     @Override
     public ImageVO uploadFile(MultipartFile uploadFile) {
         //1.校验上传的信息 是否为图片
@@ -62,7 +63,7 @@ public class FileServiceImpl implements FileService{
         File imageFile = new File(dirPath+realFileName);
         try {
             uploadFile.transferTo(imageFile);
-            String url = "https://img14.360buyimg.com/n0/jfs/t1/71310/32/5640/402976/5d3a654eE0489baf9/fd8eafe74ef8779c.jpg";
+            String url = urlPath+dateDir+realFileName;
             return ImageVO.success(url);
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
