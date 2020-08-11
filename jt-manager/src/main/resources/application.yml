@@ -9,7 +9,7 @@ spring:
     #driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.126.129:8066/jtdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
     username: root
-    password: Syp950628
+    password: root
 
   mvc:
     view:
