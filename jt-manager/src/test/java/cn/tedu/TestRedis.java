@@ -2,6 +2,7 @@ package cn.tedu;
 
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
 import redis.clients.jedis.params.SetParams;
 
 import java.util.Map;
@@ -107,5 +108,22 @@ public class TestRedis {
         jedis.lpush("list","1","2","3","4","5");
         String value = jedis.rpop("list");
         System.out.println(value);
+    }
+    /*
+     * 实现redis事务控制
+     * */
+    @Test
+    public void testMulti(){
+        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        Transaction transaction = jedis.multi();
+        try{
+            transaction.set("AAA","XXX");
+            transaction.set("BBB","XXX");
+            transaction.exec();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            transaction.discard();
+        }
     }
 }
