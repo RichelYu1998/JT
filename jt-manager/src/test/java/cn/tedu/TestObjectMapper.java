@@ -1,6 +1,7 @@
 package cn.tedu;
 
 import cn.tedu.pojo.ItemDesc;
+import cn.tedu.util.ObjectMapperUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -36,5 +37,17 @@ public class TestObjectMapper {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    public void test02() {
+        ItemDesc itemDesc = new ItemDesc();
+        itemDesc.setItemId(100L)
+                .setItemDesc("测试JSON转化")
+                .setCreated(new Date())
+                .setUpdated(itemDesc.getCreated());
+        String json = ObjectMapperUtil.toJSON(itemDesc);
+        System.out.println(json);
+        ItemDesc itemDesc3 = ObjectMapperUtil.toObject(json, ItemDesc.class);
+        System.out.println(itemDesc3);
     }
 }
