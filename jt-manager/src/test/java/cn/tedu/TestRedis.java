@@ -54,4 +54,16 @@ public class TestRedis {
         jedis.setnx("boss","马云");
         System.out.println(jedis.get("boss"));
     }
+    /*
+    *   为数据添加超时时间
+    * 原子性：一起完成一起回滚
+    * 锁机制：保证原子性 死锁~
+    * 小结：setnx：如果key存在 就不赋值
+    *      setex:保证原子性需求并设定超时时间
+    * */
+    @Test
+    public void test04(){
+        Jedis jedis = new Jedis("192.168.126.129", 6379);
+       jedis.setex("aaa",20,"xxx");//满足原子性需求
+    }
 }
