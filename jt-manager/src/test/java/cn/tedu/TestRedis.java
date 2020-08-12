@@ -1,13 +1,17 @@
 package cn.tedu;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 import redis.clients.jedis.params.SetParams;
 
+import javax.annotation.Resource;
 import java.util.Map;
-
+@SpringBootTest
 public class TestRedis {
+    @Resource
+    private Jedis jedis;
     /*
      *完成redis入门案例
      * 如果报错
@@ -17,7 +21,7 @@ public class TestRedis {
      * */
     @Test
     public void test01() {
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
         //1.向redis中存数据
         jedis.set("2004", "今天下雨了");
         //2.从redis获取数据
@@ -27,7 +31,7 @@ public class TestRedis {
 
     @Test
     public void test02() {
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
         //1.是否存在key
         if (jedis.exists("2004")) ;
         //2.如果存在则设定超时时间
@@ -52,7 +56,7 @@ public class TestRedis {
      *  */
     @Test
     public void test03(){
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
         jedis.flushAll();//清空缓存
         //如果key存在，就不进行赋值操作
         jedis.setnx("boss","马化腾");
@@ -68,7 +72,7 @@ public class TestRedis {
      * * */
     @Test
     public void test04(){
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
        jedis.setex("aaa",20,"xxx");//满足原子性需求
     }
     /**
@@ -82,7 +86,7 @@ public class TestRedis {
      */
     @Test
     public void test05(){
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
         SetParams setParams=new SetParams();
         setParams.nx().ex(20);
         jedis.set("AAA","8888",setParams);
@@ -93,7 +97,7 @@ public class TestRedis {
     * */
     @Test
     public void testHash(){
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
         jedis.hset("person","name","tomcat");
         jedis.hset("person","age","100");
         Map<String, String> map = jedis.hgetAll("person");
@@ -104,7 +108,7 @@ public class TestRedis {
      * */
     @Test
     public void testList(){
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
         jedis.lpush("list","1","2","3","4","5");
         String value = jedis.rpop("list");
         System.out.println(value);
@@ -114,7 +118,7 @@ public class TestRedis {
      * */
     @Test
     public void testMulti(){
-        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        //Jedis jedis = new Jedis("192.168.126.129", 6379);
         Transaction transaction = jedis.multi();
         try{
             transaction.set("AAA","XXX");
