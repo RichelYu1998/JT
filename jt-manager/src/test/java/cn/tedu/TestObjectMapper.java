@@ -1,6 +1,7 @@
 package cn.tedu;
 
 import cn.tedu.pojo.ItemDesc;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ public class TestObjectMapper {
             //2.将json转化为对象   传递需要转化之后的class类型   调用是对象的set方法
             ItemDesc itemDesc2 = MAPPER.readValue(json, ItemDesc.class);
             System.out.println(itemDesc2);
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
     }
