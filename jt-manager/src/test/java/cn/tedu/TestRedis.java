@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;
 
+import java.util.Map;
+
 public class TestRedis {
     /*
      *完成redis入门案例
@@ -84,5 +86,16 @@ public class TestRedis {
         setParams.nx().ex(20);
         jedis.set("AAA","8888",setParams);
         System.out.println(jedis.get("AAA"));
+    }
+    /*
+    * 测试hash数据类型
+    * */
+    @Test
+    public void testHash(){
+        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        jedis.hset("person","name","tomcat");
+        jedis.hset("person","age","100");
+        Map<String, String> map = jedis.hgetAll("person");
+        System.out.println(map);
     }
 }
