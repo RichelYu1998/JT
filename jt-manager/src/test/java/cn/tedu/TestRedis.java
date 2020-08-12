@@ -40,4 +40,18 @@ public class TestRedis {
             e.printStackTrace();
         }
     }
+    /*
+    * 需求说明
+    * 1.redis.set操作后面的操作会将之前的操作覆盖
+    * 要求：如果已经存在，则不允许赋值
+    * */
+    @Test
+    public void test03(){
+        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        jedis.flushAll();//清空缓存
+        //如果key存在，就不进行赋值操作
+        jedis.setnx("boss","马化腾");
+        jedis.setnx("boss","马云");
+        System.out.println(jedis.get("boss"));
+    }
 }
