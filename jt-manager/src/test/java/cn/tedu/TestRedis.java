@@ -98,4 +98,14 @@ public class TestRedis {
         Map<String, String> map = jedis.hgetAll("person");
         System.out.println(map);
     }
+    /*
+     * 测试list集合类型
+     * */
+    @Test
+    public void testList(){
+        Jedis jedis = new Jedis("192.168.126.129", 6379);
+        jedis.lpush("list","1","2","3","4","5");
+        String value = jedis.rpop("list");
+        System.out.println(value);
+    }
 }
