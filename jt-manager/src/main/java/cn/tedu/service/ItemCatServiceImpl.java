@@ -35,6 +35,7 @@ public class ItemCatServiceImpl implements ItemCatService {
      * 	3.但是返回值要求 返回List<EasyUITree>
      */
     @Override
+    @CacheFind(key="ITEM_CAT_LIST")
     public List<EasyUITree> findItemCatByParentId(Long parentId){
         QueryWrapper<ItemCat> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("parent_id",parentId);
