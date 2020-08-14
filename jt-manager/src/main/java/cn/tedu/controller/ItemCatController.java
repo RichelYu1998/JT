@@ -46,8 +46,8 @@ public class ItemCatController {
         //1.查询一级商品分类信息
         //Long parentId = id==null?0L:id;
 
-        //return itemCatService.findItemCatByParentId(parentId);
+        return itemCatService.findItemCatByParentId(parentId);
         //通过缓存的方式获取数据.
-        return itemCatService.findItemCatByCache(parentId);
+        //return itemCatService.findItemCatByCache(parentId); //手写缓存
     }
 }

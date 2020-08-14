@@ -1,5 +1,6 @@
 package cn.tedu.service;
 
+import cn.tedu.anno.CacheFind;
 import cn.tedu.mapper.ItemCatMapper;
 import cn.tedu.pojo.ItemCat;
 import cn.tedu.util.ObjectMapperUtil;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +55,8 @@ public class ItemCatServiceImpl implements ItemCatService {
         return treeList;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @CacheFind(key="ITEM_CAT_LIST")
     public List<EasyUITree> findItemCatByCache(Long parentId) {
         //1.定义key
         String key = "ITEM_CAT_LIST::"+parentId;
