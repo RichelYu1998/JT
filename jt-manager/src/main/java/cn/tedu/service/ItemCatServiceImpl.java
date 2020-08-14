@@ -21,7 +21,6 @@ public class ItemCatServiceImpl implements ItemCatService {
     @Resource
     private Jedis jedis;
     @Override
-    @CacheFind(key="ITEM_CAT_ID")
     public ItemCat findItemCatById(Long itemCatId) {
 
         //利用MP机制查询数据库数据.
