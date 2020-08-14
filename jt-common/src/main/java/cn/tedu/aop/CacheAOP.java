@@ -23,35 +23,38 @@ public class CacheAOP {
     private Jedis jedis;
     @SuppressWarnings("unchecked")
     @Around("@annotation(cacheFind)")
-    public Object around(ProceedingJoinPoint joinPoint, CacheFind cacheFind){
+    public Object around(ProceedingJoinPoint joinPoint,CacheFind cacheFind) {
+
         //1.获取用户注解中的key     ITEM_CAT_LIST::0
         String key = cacheFind.key();
         //2.动态获取第一个参数当做key
-        String firstArg  = joinPoint.getArgs()[0].toString();
+        String firstArg = joinPoint.getArgs()[0].toString();
         key += "::"+firstArg;
-        Object result=null;
+
+        Object result = null;
         //3.根据key查询redis.
-        if(jedis.exists(key)){
+        if(jedis.exists(key)) {
+
             //根据redis获取数据信息
-            String json  = jedis.get(key);
+            String json = jedis.get(key);
             //如何获取返回值类型
-            MethodSignature methodSignature  =(MethodSignature) joinPoint.getSignature();
+            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             result = ObjectMapperUtil.toObject(json, methodSignature.getReturnType());
             System.out.println("aop查询redis缓存");
         }else {
             //如果key不存在,则证明是第一次查询.  应该查询数据库
-            try{
-                joinPoint.proceed();
+            try {
+                result = joinPoint.proceed(); //目标方法返回值
                 System.out.println("AOP查询数据库获取返回值结果");
                 //将数据保存到redis中
-                String json  = ObjectMapperUtil.toJSON(result);
+                String json = ObjectMapperUtil.toJSON(result);
                 int seconds = cacheFind.seconds();
-                if(seconds>0){
-                    jedis.setex(key,seconds,json);
-                }else {
-                    jedis.set(key,json);
-                }
-            }catch (Throwable e){
+                if(seconds>0)
+                    jedis.setex(key, seconds, json);
+                else
+                    jedis.set(key, json);
+
+            } catch (Throwable e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
