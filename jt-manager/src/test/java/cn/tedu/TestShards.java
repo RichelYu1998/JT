@@ -15,14 +15,13 @@ public class TestShards {//改类表示测试redis分片机制
      */
     @Test
     public void test01(){
-        List<JedisShardInfo> shards=new ArrayList<>();
-        shards.add(new JedisShardInfo("192.168.126.129",6379));
-        shards.add(new JedisShardInfo("192.168.126.129",6380));
-        shards.add(new JedisShardInfo("192.168.126.129",6381));
-        ShardedJedis shardedInfo = new ShardedJedis(shards);
-        //分片API
+        List<JedisShardInfo> shards = new ArrayList<>();
+        shards.add(new JedisShardInfo("192.168.126.129", 6379));
+        shards.add(new JedisShardInfo("192.168.126.129", 6380));
+        shards.add(new JedisShardInfo("192.168.126.129", 6381));
+        //分片的API
         ShardedJedis shardedJedis = new ShardedJedis(shards);
-        shardedJedis.set("王者荣耀","我是亚索");
+        shardedJedis.set("王者荣耀", "你好我是小菜鸡,坑死你");
         System.out.println(shardedJedis.get("王者荣耀"));
     }
 }
