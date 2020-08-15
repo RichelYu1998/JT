@@ -13,6 +13,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ShardedJedis;
 
 import javax.annotation.Resource;
 
@@ -20,8 +21,8 @@ import javax.annotation.Resource;
 @Aspect    //我是一个切面
 public class CacheAOP {
     @Resource
-    private Jedis jedis;
-
+    //private Jedis jedis;
+    private ShardedJedis shardedJedis;
     @SuppressWarnings("unchecked")
     @Around("@annotation(cacheFind)")
     public Object around(ProceedingJoinPoint joinPoint, CacheFind cacheFind) {
@@ -32,9 +33,9 @@ public class CacheAOP {
         key += "::" + firstArg;
         Object result = null;
         //3.根据key查询redis.
-        if (jedis.exists(key)) {
+        if (shardedJedis.exists(key)) {
             //根据redis获取数据信息
-            String json = jedis.get(key);
+            String json = shardedJedis.get(key);
             //如何获取返回值类型
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             result = ObjectMapperUtil.toObject(json, methodSignature.getReturnType());
@@ -48,9 +49,9 @@ public class CacheAOP {
                 String json = ObjectMapperUtil.toJSON(result);
                 int seconds = cacheFind.seconds();
                 if (seconds > 0) {
-                    jedis.setex(key, seconds, json);
+                    shardedJedis.setex(key, seconds, json);
                 } else {
-                    jedis.set(key, json);
+                    shardedJedis.set(key, json);
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
