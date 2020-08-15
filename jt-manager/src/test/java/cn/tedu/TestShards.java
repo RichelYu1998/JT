@@ -7,7 +7,7 @@ import redis.clients.jedis.ShardedJedis;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestShards {//表示分片
+public class TestShards {//改类表示测试redis分片机制
     /**
      * 说明:在Linux中有3台redis.需要通过程序进行动态链接.
      * 实现数据的存储.
