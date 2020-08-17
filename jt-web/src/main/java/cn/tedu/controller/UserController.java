@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
     /*
-    * 业务说明：用一个方法实现页面的通用跳转
-    * http://www.jt.com/user/login.html 跳转页面 login.jsp
-    * http://www.jt.com/user/register.html 跳转页面 register.jsp
-    * */
+     * 业务说明：用一个方法实现页面的通用跳转
+     * http://www.jt.com/user/login.html 跳转页面 login.jsp
+     * http://www.jt.com/user/register.html 跳转页面 register.jsp
+     * */
    /* @RequestMapping("register")
     public String register(){
         return "register";
@@ -19,8 +20,9 @@ public class UserController {
     public String login(){
         return "login";
     }*/
-    @RequestMapping("/{module}")
-    public String modulename(@PathVariable String module){
-        return module;
+    @RequestMapping("/{page}")
+    public String page(@PathVariable String page) {
+        return page;
     }
 }
+
