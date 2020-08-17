@@ -1,6 +1,7 @@
 package cn.tedu.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -10,12 +11,16 @@ public class UserController {
     * http://www.jt.com/user/login.html 跳转页面 login.jsp
     * http://www.jt.com/user/register.html 跳转页面 register.jsp
     * */
-    @RequestMapping("register")
+   /* @RequestMapping("register")
     public String register(){
         return "register";
     }
     @RequestMapping("login")
     public String login(){
         return "login";
+    }*/
+    @RequestMapping("/{module}")
+    public String modulename(@PathVariable String module){
+        return module;
     }
 }
