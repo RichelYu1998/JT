@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration 	//我是一个配置类    一般都会与@Bean联用
 @PropertySource("classpath:/properties/redis.properties")
@@ -24,10 +24,10 @@ public class RedisConfig {
     public Jedis jedis() {
         return new Jedis(host, port);
     }
-    @Value("${redis.nodes}")
+    /*@Value("${redis.nodes}")
     private String redisNodes;   //node,node,node
 
-    /*整合分片实现Redis内存扩容*/
+    *//*整合分片实现Redis内存扩容*//*
     @Bean
     public ShardedJedis shardedJedis() {
         String[] nodes = redisNodes.split(",");  //节点数组
@@ -40,5 +40,18 @@ public class RedisConfig {
         }
         //返回分片对象
         return new ShardedJedis(list);
+    }*/
+    @Value("${redis.nodes}")
+    private String redisNodes;
+    @Bean
+    public JedisCluster jedisCluster() {
+        Set<HostAndPort> nodeSet = new HashSet<>();
+        String[] clusters = redisNodes.split(",");
+        for (String cluster : clusters) {	//host:port
+            String host = cluster.split(":")[0];
+            int port = Integer.parseInt(cluster.split(":")[1]);
+            nodeSet.add(new HostAndPort(host, port));
+        }
+        return new JedisCluster(nodeSet);
     }
 }
