@@ -17,6 +17,9 @@
           <element id="archive" name="jt-web-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="jt-web" />
           </element>
+          <element id="archive" name="jt-common-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="jt-common" />
+          </element>
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-web:2.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter:2.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.3.2.RELEASE" />
