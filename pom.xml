@@ -156,7 +156,8 @@
 		<module>jt-common</module>
 		<module>jt-manager</module>
 		<module>jt-web</module>
-	</modules>
+        <module>jt-sso</module>
+    </modules>
 	
 	
 	
