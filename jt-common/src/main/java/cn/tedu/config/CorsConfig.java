@@ -13,7 +13,7 @@ public class CorsConfig implements WebMvcConfigurer {
         // /-->允许一级目录进行请求 /**-->多级目录请求
         registry.addMapping("/**")
         //2.允许哪些服务器进行跨域
-            .allowedOrigins("http://www.jt.com")
+            .allowedOrigins("*")
         //3.允许的请求方式
             .allowedMethods("GET","POST","PUT","DELETE","HEAD")
         //4.是否允许携带cookie
