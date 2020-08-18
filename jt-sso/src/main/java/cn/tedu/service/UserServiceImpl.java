@@ -3,7 +3,6 @@ package cn.tedu.service;
 import cn.tedu.mapper.UserMapper;
 import cn.tedu.pojo.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,7 +21,7 @@ public class UserServiceImpl implements  UserService{
     }
 
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     /**
@@ -39,6 +38,13 @@ public class UserServiceImpl implements  UserService{
         queryWrapper.eq(column, param);
         int count = userMapper.selectCount(queryWrapper);
         return count==0?false:true;
+    }
+
+    @Override
+    public void saveHttpCleint(User userPOJO) {
+        userPOJO.setEmail("111222333@qq.com")
+                .setPhone("1311112222");
+        userMapper.insert(userPOJO);
     }
 
 

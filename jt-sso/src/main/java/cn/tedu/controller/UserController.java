@@ -1,5 +1,6 @@
 package cn.tedu.controller;
 
+import cn.tedu.pojo.User;
 import cn.tedu.service.UserService;
 import cn.tedu.vo.SysResult;
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -38,5 +39,14 @@ public class UserController {
         //1.校验数据库中是否存在该数据
         boolean flag = userService.checkUser(param,type);  //存在true  不存在false
         return new JSONPObject(callback, SysResult.success(flag));
+    }
+    /**
+     * 完成httpClient测试
+     * url:http://sso.jt.com/user/httpClient/saveUser?username=111&password="2222"
+     */
+    @RequestMapping("/httpClient/saveUser")
+    public SysResult saveUser(User user) {
+        userService.saveHttpCleint(user);
+        return SysResult.success();
     }
 }
