@@ -7,7 +7,7 @@ spring:     #定义springmvc视图解析器
       suffix: .jsp
 dubbo:
   scan:
-    basePackages: com.jt
+    basePackages: cn.tedu
   application:
     name: consumer-web   #定义消费者名称
   registry:               #注册中心地址
