@@ -97,7 +97,6 @@ public class UserController {
             //ticket有误.返回错误信息即可
             return new JSONPObject(callback, SysResult.fail());
         }else{
-            System.out.println(userJSON+"ddddd");
             return new JSONPObject(callback, SysResult.success(userJSON));
 
         }
