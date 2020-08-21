@@ -4,21 +4,26 @@ import cn.tedu.pojo.User;
 import cn.tedu.service.DubboUserService;
 import cn.tedu.vo.SysResult;
 import com.alibaba.dubbo.config.annotation.Reference;
-import org.springframework.stereotype.Controller;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.JedisCluster;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     @Reference(check = false)
     private DubboUserService dubboUserService;
+    @Resource
+    private JedisCluster jedisCluster;
     /*
     * 业务说明：用一个方法实现页面的通用跳转
     * http://www.jt.com/user/login.html 跳转页面 login.jsp
@@ -76,5 +81,25 @@ public class UserController {
         response.addCookie(cookie);
 
         return SysResult.success();
+    }
+    /**
+     * 完成回显用户名称
+     * url地址: http://sso.jt.com/user/query/494fcc9ac98e49bc98baffd6d8fc6802?callback=jsonp1597999688824&_=1597999688872
+     * 参数:  ticket信息
+     * 返回值: SysResult对象(userJSON)
+     * */
+    @RequestMapping("/query/{ticket}")
+    @ResponseBody
+    public JSONPObject  findUserByTicket(@PathVariable String ticket,String callback){
+
+        String userJSON = jedisCluster.get(ticket);
+        if(StringUtils.isEmpty(userJSON)){
+            //ticket有误.返回错误信息即可
+            return new JSONPObject(callback, SysResult.fail());
+        }else{
+            System.out.println(userJSON+"ddddd");
+            return new JSONPObject(callback, SysResult.success(userJSON));
+
+        }
     }
 }
