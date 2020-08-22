@@ -2,6 +2,7 @@ package cn.tedu.controller;
 
 import cn.tedu.pojo.User;
 import cn.tedu.service.DubboUserService;
+import cn.tedu.util.CookieUtil;
 import cn.tedu.vo.SysResult;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -10,7 +11,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
@@ -113,28 +113,16 @@ public class UserController {
      */
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request,HttpServletResponse response){
-        String jtTicket = null;
-        //1.如何获取cookie中的数据?
-        Cookie[] cookies = request.getCookies();
-        //2.校验Cookie数据是否为null
-        if(cookies !=null && cookies.length>0){
-            for(Cookie cookie : cookies){
-                if(TICKET.equalsIgnoreCase(cookie.getName())){
-                    jtTicket = cookie.getValue();
-                    //业务需要提前删除Cookie
-                    cookie.setMaxAge(0);
-                    cookie.setPath("/");
-                    cookie.setDomain("jt.com");
-                    response.addCookie(cookie);
-                    break;
-                }
+        Cookie cookie = CookieUtil.getCookieByName(request,TICKET);
+        //1.校验cookie中是否有记录
+        if(cookie != null){
+            String jtTicket = cookie.getValue();
+            if(!StringUtils.isEmpty(jtTicket)){
+                //删除Redis数据
+                jedisCluster.del(jtTicket);
+                //删除cookie
+                CookieUtil.deleteCookie(TICKET, "/", "jt.com", response);
             }
-        }
-        //2.校验数据是否有效
-        if(!StringUtils.isEmpty(jtTicket)){
-            //如果数据不为null,则开始执行退出操作.
-            jedisCluster.del(jtTicket); //根据key,删除Redis中的记录
-            //删除cookie.
         }
         return "redirect:/";
     }
