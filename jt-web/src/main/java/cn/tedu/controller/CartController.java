@@ -62,4 +62,16 @@ public class CartController {
         cartService.deleteCart(cart);
         return "redirect:/cart/show.html"; //维护伪静态策略
     }
+    /**
+     * url地址:http://www.jt.com/cart/add/562379.html
+     * 参数: 表单数据提交  cart
+     * 返回值: 重定向到购物车展现页面
+     */
+    @RequestMapping("/add/{itemId}")
+    public String saveCart(Cart cart){
+        Long userId=7L;
+        cart.setUserId(userId);
+        cartService.saveCart(cart);
+        return "redirect:/cart/show.html"; //维护伪静态策略
+    }
 }

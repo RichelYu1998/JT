@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,11 +32,30 @@ public class DubboCartServiceImpl implements DubboCartService {
         UpdateWrapper<Cart> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("item_id", cart.getItemId())
                 .eq("user_id", cart.getUserId());
-        cartMapper.update(cartTemp,updateWrapper);
+        cartMapper.update(cartTemp, updateWrapper);
     }
 
     @Override
     public void deleteCart(Cart cart) {
         cartMapper.delete(new QueryWrapper<>(cart));
+    }
+
+    @Override
+    @Transactional
+    public void saveCart(Cart cart) {
+        QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", cart.getUserId());
+        queryWrapper.eq("item_id", cart.getItemId());
+        Cart cartDB = cartMapper.selectOne(queryWrapper);
+        if (cartDB == null) {
+            cart.setCreated(new Date())
+                    .setUpdated(cart.getCreated());
+        }else {
+            int num=cart.getNum()+cartDB.getNum();
+            Cart cartTemp  = new Cart();
+            cartTemp.setId(cartDB.getId())
+                    .setNum(num);
+            cartMapper.updateById(cartTemp);
+        }
     }
 }

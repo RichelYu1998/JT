@@ -10,4 +10,6 @@ public interface DubboCartService {
     void updateCartNum(Cart cart);
 
     void deleteCart(Cart cart);
+
+    void saveCart(Cart cart);
 }
