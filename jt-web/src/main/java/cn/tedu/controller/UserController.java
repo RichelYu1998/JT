@@ -15,12 +15,14 @@ import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private static final String ticket="JT_TICKET";
     @Reference(check = false)
     private DubboUserService dubboUserService;
     @Resource
@@ -101,5 +103,39 @@ public class UserController {
             return new JSONPObject(callback, SysResult.success(userJSON));
 
         }
+    }
+    /**
+     * 完成用户退出操作
+     * 1.url: http://www.jt.com/user/logout.html
+     * 2.没有传递参数
+     * 3.返回值: string  重定向到系统首页
+     * 业务实现思路:
+     * 	 0.先获取cookie中的数据 NAME=JT_TICKET
+     * 	 1.删除redis中的数据     key-value    key=cookie中的value
+     * 	 2.删除cookie记录	   根据cookie名称  设置存活时间即可.
+     *
+     * 注意事项: request对象中只能传递cookie的name和value.不能传递其他数据参数.
+     * 所以如果需要再次操作cookie则最好设定参数,否则可能导致操作失败
+     */
+    @RequestMapping("/logout")
+    public String  logout(HttpServletRequest request,HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies !=null && cookies.length >0) {
+            for (Cookie cookie : cookies) {
+                if("JT_TICKET".equalsIgnoreCase(cookie.getName())) {
+                    String ticket = cookie.getValue();
+                    //1.删除redis数据
+                    jedisCluster.del(ticket);
+                    //2.删除cookie   立即删除cookie 0  ,  暂时不删,关闭浏览器时删除 -1
+                    cookie.setDomain("jt.com");
+                    cookie.setPath("/");
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
+        }
+        //重定向到系统首页
+        return "redirect:/";
     }
 }
