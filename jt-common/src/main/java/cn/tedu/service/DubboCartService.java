@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface DubboCartService {
     List<Cart> findCartListByUserId(Long userId);
+
+    void updateCartNum(Cart cart);
 }

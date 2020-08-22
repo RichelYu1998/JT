@@ -7,6 +7,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -29,5 +30,20 @@ public class CartController {
         //利用model对象将数据填充到域对象中request域
         model.addAttribute("cartList",cartList);
         return "cart";
+    }
+    /**
+     * 业务需求:  完成购物车更新操作
+     * 1.url地址: http://www.jt.com/cart/update/num/562379/13
+     * 2.请求参数: 562379-itemId  /13-num
+     * 3.返回值结果: void
+     *
+     */
+    @RequestMapping("/update/num/{itemId}/{num}")
+    @ResponseBody
+    public void updateCart(Cart cart){
+        //userId和itemId
+        Long userId=7L;
+        cart.setUserId(userId);
+        cartService.updateCartNum(cart);
     }
 }
