@@ -33,4 +33,9 @@ public class DubboCartServiceImpl implements DubboCartService {
                 .eq("user_id", cart.getUserId());
         cartMapper.update(cartTemp,updateWrapper);
     }
+
+    @Override
+    public void deleteCart(Cart cart) {
+        cartMapper.delete(new QueryWrapper<>(cart));
+    }
 }

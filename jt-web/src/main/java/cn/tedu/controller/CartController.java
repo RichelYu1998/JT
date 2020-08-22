@@ -6,6 +6,7 @@ import cn.tedu.service.DubboCartService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,5 +46,20 @@ public class CartController {
         Long userId=7L;
         cart.setUserId(userId);
         cartService.updateCartNum(cart);
+    }
+    /**
+     * 业务:删除购物车操作
+     * url地址: http://www.jt.com/cart/delete/562379.html
+     * 参数问题: 562379
+     * 返回值结果: 重定向到购物车列表页面
+     */
+    @RequestMapping("delete/{itemId}")
+    public String deleteCart(@PathVariable("itemId") Long itemId){
+        Long userId=7L;
+        Cart cart = new Cart();
+        cart.setUserId(userId);
+        cart.setItemId(itemId);
+        cartService.deleteCart(cart);
+        return "redirect:/cart/show.html"; //维护伪静态策略
     }
 }
