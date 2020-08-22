@@ -5,6 +5,7 @@ import cn.tedu.service.DubboUserService;
 import cn.tedu.vo.SysResult;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
     @Reference(check = false)
