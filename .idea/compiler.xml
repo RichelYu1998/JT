@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="jt-cart" />
         <module name="jt-web" />
         <module name="jt-manager" />
         <module name="jt-sso" />
@@ -15,6 +16,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="jt" target="1.8" />
+      <module name="jt-cart" target="1.8" />
       <module name="jt-common" target="1.8" />
       <module name="jt-manager" target="1.8" />
       <module name="jt-sso" target="1.8" />
@@ -23,6 +25,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="jt-cart" options="-parameters" />
       <module name="jt-common" options="-parameters" />
       <module name="jt-manager" options="-parameters" />
       <module name="jt-sso" options="-parameters" />
