@@ -28,7 +28,7 @@ logging:
 #关于Dubbo配置
 dubbo:
   scan:
-    basePackages: com.jt    #指定dubbo的包路径
+    basePackages: cn.tedu    #指定dubbo的包路径
   application:              #应用名称
     name: provider-item     #一个接口对应一个服务名称
   registry:

@@ -10,18 +10,17 @@ import com.alibaba.dubbo.config.annotation.Service;
 import javax.annotation.Resource;
 
 @Service
-public class DubboItemServiceImpl implements DubboItemService{
+public class DubboItemServiceImpl implements DubboItemService {
+
     @Resource
     private ItemMapper itemMapper;
     @Resource
     private ItemDescMapper itemDescMapper;
-
     @Override
     @CacheFind(key = "ITEM_ID")
     public Item findItemById(Long itemId) {
         return itemMapper.selectById(itemId);
     }
-
     @Override
     @CacheFind(key = "ITEM_DESC_ID")
     public ItemDesc findItemDescById(Long itemId) {

@@ -8,11 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 //需要跳转页面
 @Controller
 public class ItemController {
-    @Reference
+    @Reference(check = false)
     private DubboItemService itemService;
     /**
      * 知识点:1.mvc页面跳转机制 2.restFul 3.jsp页面取值写法 4.dubbo
@@ -24,7 +25,6 @@ public class ItemController {
      */
     @RequestMapping("/items/{itemId}")
     public String findItemById(@PathVariable Long itemId, Model model){
-
         //1.远程访问获取商品信息
         Item item = itemService.findItemById(itemId);
         //2.远程访问获取商品描述信息
