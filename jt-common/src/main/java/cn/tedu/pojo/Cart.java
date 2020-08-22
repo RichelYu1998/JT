@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @TableName("tb_cart")
 @Data
 @Accessors(chain = true)
-public class Cart {
+public class Cart extends BasePojo{
     @TableId(type = IdType.AUTO)
     private Long id;
     private Long userId;
