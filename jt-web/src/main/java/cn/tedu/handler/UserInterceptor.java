@@ -1,6 +1,8 @@
 package cn.tedu.handler;
 
+import cn.tedu.pojo.User;
 import cn.tedu.util.CookieUtil;
+import cn.tedu.util.ObjectMapperUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import redis.clients.jedis.JedisCluster;
@@ -13,9 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 //拦截器的类(业务) 拦截器的配置文件(拦截什么配置请求)
 @Component
 public class UserInterceptor implements HandlerInterceptor {
+    private static final String TICKET = "JT_TICKET";
+    private static final String JTUSER = "JT_USER";
     @Resource
     private JedisCluster jedisCluster;
-    private static final String TICKET = "JT_TICKET";
     /**
      *  实现pre的方法
      *  返回值说明:
@@ -31,6 +34,11 @@ public class UserInterceptor implements HandlerInterceptor {
             String ticket = cookie.getValue(); //cookie中存储的是Redis的key ticket密钥
             if(jedisCluster.exists(ticket)){
                 //如果redis中的数据存在,则说明用户已经登录.可以放行请求.
+                //获取真实的用户信息
+                String userJSON = jedisCluster.get(ticket);
+                //将json转化为对象
+                User user = ObjectMapperUtil.toObject(userJSON, User.class);
+                request.setAttribute(JTUSER, user);
                 return true;
             }else{
                 //Cookie中的记录与Redis中的记录不一致.应该删除Cookie中的数据.

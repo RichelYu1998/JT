@@ -2,6 +2,7 @@ package cn.tedu.controller;
 
 
 import cn.tedu.pojo.Cart;
+import cn.tedu.pojo.User;
 import cn.tedu.service.DubboCartService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -23,9 +25,11 @@ public class CartController {
      * @return
      */
     @RequestMapping("/show")
-    public String show(Model model){
+    public String show(Model model, HttpServletRequest request){
         //1.获取userId  利用单点登录方式动态获取userID  暂时定死
-        Long userId=7L;
+       /* Long userId=7L;*/
+        User user = (User) request.getAttribute("JT_USER");
+        Long userId = user.getId();
         //2.根据userId查询购物车数据
         List<Cart> cartList=cartService.findCartListByUserId(userId);
         //利用model对象将数据填充到域对象中request域
