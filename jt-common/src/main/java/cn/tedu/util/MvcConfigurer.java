@@ -1,4 +1,4 @@
-package cn.tedu.config;
+package cn.tedu.util;
 
 import cn.tedu.handler.UserInterceptor;
 import org.springframework.context.annotation.Configuration;
