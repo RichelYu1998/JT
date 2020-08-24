@@ -84,6 +84,11 @@
           <element id="library" level="project" name="Maven: org.apache.curator:curator-client:2.12.0" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:16.0.1" />
           <element id="library" level="project" name="Maven: com.alibaba.boot:dubbo-spring-boot-autoconfigure:0.2.0" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-quartz:2.3.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:5.2.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz:2.3.2" />
+          <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.15" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.9.6" />
@@ -93,9 +98,7 @@
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-redis:2.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-keyvalue:2.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:2.3.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-oxm:5.2.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:5.2.8.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
