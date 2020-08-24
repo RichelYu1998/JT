@@ -3,6 +3,7 @@ package cn.tedu.handler;
 import cn.tedu.pojo.User;
 import cn.tedu.util.CookieUtil;
 import cn.tedu.util.ObjectMapperUtil;
+import cn.tedu.util.UserThreadLocal;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import redis.clients.jedis.JedisCluster;
@@ -39,6 +40,7 @@ public class UserInterceptor implements HandlerInterceptor {
                 //将json转化为对象
                 User user = ObjectMapperUtil.toObject(userJSON, User.class);
                 request.setAttribute(JTUSER, user);
+                UserThreadLocal.set(user);
                 return true;
             }else{
                 //Cookie中的记录与Redis中的记录不一致.应该删除Cookie中的数据.
