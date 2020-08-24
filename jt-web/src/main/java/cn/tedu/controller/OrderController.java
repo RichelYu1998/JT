@@ -40,25 +40,23 @@ public class OrderController {
         model.addAttribute("carts", cartList);
         return "order-cart";
     }
-
     /**
-     * 1.url地址:http://www.jt.com/order/submit
-     * 2.参数   form表单提交
-     * 3.返回值  SysResult对象  并且包含orderId数据
-     *
-     * @return
+     * 1.实现订单入库
+     * url:http://www.jt.com/order/submit
+     * 参数: 整个form表单    利用order对象接收
+     * 返回值: SysResult对象    返回orderId
+     * 业务: 订单入库时应该入库3张表记录. order  orderShipping  orderItems
+     *       orderId由登录用户id+当前时间戳手动 拼接.
+     *       并且要求三个对象的主键值相同.
      */
     @RequestMapping("/submit")
     @ResponseBody
-    public SysResult saveOrder(Order order, HttpServletRequest request) {
-        User user = (User) request.getAttribute("JT_USER");
-        Long userId = user.getId();
-        order.setUserId(userId);    //将userId进行赋值操作.
+    public SysResult submit(Order order){
+        //利用拦截器的方式赋值.
+        Long userId = UserThreadLocal.get().getId();
+        order.setUserId(userId);
+        //1.完成订单入库,并且返回orderId
         String orderId = orderService.saveOrder(order);
-        if (StringUtils.isEmpty(orderId)) {
-            //说明:后端服务器异常
-            return SysResult.fail();
-        }
         return SysResult.success(orderId);
     }
     //http://www.jt.com/order/success.html?id=111595833611692

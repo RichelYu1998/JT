@@ -23,35 +23,28 @@ public class OrderServiceImpl implements DubboOrderService {
 	private OrderShippingMapper orderShippingMapper;
 	@Resource
 	private OrderItemMapper orderItemMapper;
-	@Transactional //控制事务.
+	@Transactional
 	@Override
 	public String saveOrder(Order order) {
-		String orderId = ""+order.getUserId() + System.currentTimeMillis();
-		Date date = new Date();
-		//1.实现订单入库
-		order.setOrderId(orderId)
-				.setStatus(1)   //未付款
-				.setCreated(date)
-				.setUpdated(date);
+		//orderId由登录用户id+当前时间戳手动拼接.
+		String orderId = "" + order.getUserId() + System.currentTimeMillis();
+		//1.完成订单入库操作
+		order.setOrderId(orderId).setStatus(1);
 		orderMapper.insert(order);
 		System.out.println("订单入库成功!!!");
-		//2.订单物流入库
-		OrderShipping orderShipping = order.getOrderShipping();
-		orderShipping.setOrderId(orderId)
-				.setCreated(date)
-				.setUpdated(date);
-		orderShippingMapper.insert(orderShipping);
-		System.out.println("订单物流入库成功!!!!");
-		//3.订单商品入库
-		List<OrderItem> list = order.getOrderItems();
-		for (OrderItem orderItem : list) {
-
-			orderItem.setOrderId(orderId)
-					.setCreated(date)
-					.setUpdated(date);
+		//2.完成订单商品入库
+		List<OrderItem> orderItems = order.getOrderItems();
+		//insert into tb_order_item values(xxxxxx),(xxxxxxx),(xxxxxxx);
+		for (OrderItem orderItem : orderItems){
+			orderItem.setOrderId(orderId);
 			orderItemMapper.insert(orderItem);
 		}
 		System.out.println("订单商品入库成功!!!!");
+		//3.完成订单物流入库
+		OrderShipping orderShipping = order.getOrderShipping();
+		orderShipping.setOrderId(orderId);
+		orderShippingMapper.insert(orderShipping);
+		System.out.println("订单物流入库成功!!!!");
 		return orderId;
 	}
 	@Override
