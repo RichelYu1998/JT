@@ -1,7 +1,9 @@
 cn\tedu\controller\HttpClientController.class
 cn\tedu\controller\UserController.class
 cn\tedu\SpringBootRun.class
+cn\tedu\controller\CartController.class
 cn\tedu\service\HttpClientServiceImpl.class
 cn\tedu\service\HttpClientService.class
+cn\tedu\handler\UserInterceptor.class
 cn\tedu\controller\ItemController.class
 cn\tedu\config\MvcConfigurer.class
